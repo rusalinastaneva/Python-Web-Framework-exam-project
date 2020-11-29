@@ -1,0 +1,39 @@
+{% extends 'shared/base.html' %}
+
+{% block title %} | Account Login{% endblock %}
+
+{% block content %}
+    {% load bootstrap4 %}
+    <section id="login" class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>
+                                <i class="fas fa-sign-in-alt"></i> Already Have An Account?
+                            </h4>
+                            <div>Sign In with your current username</div>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{% url 'login' %}">
+                                <input type="hidden" name="return_url" value="{{ request.GET.next }}"/>
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    {% bootstrap_field field %}
+                                {% endfor %}
+
+                                {% buttons %}
+                                    <button class="btn btn-primary">Login</button>
+                                    <p>or <a href="{% url 'signup user' %}?next={{ request.GET.next }}">Create a new
+                                        account</a>
+                                    </p>
+                                {% endbuttons %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
