@@ -2,21 +2,27 @@ from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
 
+from listings.choices import status_choices, type_home_choices, state_choices
+
 
 class Listing(models.Model):
+    HOME_STATUS = [(key, value) for key, value in status_choices.items()]
+    HOME_TYPE = [(key, value) for key, value in type_home_choices.items()]
+    ALL_STATES = [(key, value) for key, value in state_choices.items()]
+
     objects = models.Manager()
     title = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
+    state = models.CharField(max_length=100, choices=ALL_STATES,default='all_states')
     zipcode = models.CharField(max_length=20)
-    type_of_home = models.CharField(max_length=30)
-    status = models.CharField(max_length=20)
+    type_of_home = models.CharField(max_length=30, choices=HOME_TYPE, default='type_home')
+    status = models.CharField(max_length=20, choices=HOME_STATUS, default='status')
     description = models.TextField(blank=True)
     price = models.IntegerField()
     bedrooms = models.IntegerField()
     bathrooms = models.IntegerField()
-    garage = models.IntegerField(default=0)
+    garage = models.IntegerField()
     sqft = models.IntegerField()
     lot_size = models.DecimalField(max_digits=5, decimal_places=1)
     is_published = models.BooleanField(default=True)
