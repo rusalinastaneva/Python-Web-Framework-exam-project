@@ -73,20 +73,17 @@ state_choices = {
     'WA': 'Washington',
     'WV': 'West Virginia',
     'WI': 'Wisconsin',
-    'WY': 'Wyoming',
-    'all_states': 'Select a state'
+    'WY': 'Wyoming'
 }
 
 status_choices = {
     'lease': 'For Lease',
-    'sale': 'For Sale',
-    'status': 'Select Lease/ Sale',
+    'sale': 'For Sale'
 }
 
 type_home_choices = {
     'apartment': 'Apartment',
     'family house': 'Single family house',
     'town house': 'Town house',
-    'condo': 'Condo',
-    'type_home': 'Select a type of home',
+    'condo': 'Condo'
 }

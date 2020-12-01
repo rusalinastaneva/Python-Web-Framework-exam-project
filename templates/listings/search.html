@@ -29,10 +29,8 @@
                                     <option selected="true" disabled="disabled">State (All)</option>
                                     {% for key, value in state_choices.items %}
                                         <option value="{{ key }}"
-                                                {% if key == values.state %}
-                                                selected>
-                                                {% endif %}
-                                                {{ value }}
+                                                {% if key == values.state %} selected {% endif %}>
+                                            {{ value }}
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -47,10 +45,8 @@
                                     <option selected="true" disabled="disabled">Lease/ Sale</option>
                                     {% for key, value in status_choices.items %}
                                         <option value="{{ key }}"
-                                                {% if key == values.status %}
-                                                selected>
-                                                {% endif %}
-                                        {{ value }}
+                                                {% if key == values.status %} selected {% endif %}>
+                                            {{ value }}
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -61,10 +57,8 @@
                                     <option selected="true" disabled="disabled">Type of home (All)</option>
                                     {% for key, value in type_home_choices.items %}
                                         <option value="{{ key }}"
-                                                {% if key == values.type_home %}
-                                                selected>
-                                                {% endif %}
-                                        {{ value }}
+                                                {% if key == values.type_home %} selected {% endif %}>
+                                            {{ value }}
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -79,10 +73,8 @@
                                     <option selected="true" disabled="disabled">Bedrooms (Any)</option>
                                     {% for key, value in bedroom_choices.items %}
                                         <option value="{{ key }}"
-                                                {% if key == values.bedrooms %}
-                                                selected>
-                                                {% endif %}
-                                        {{ value }}
+                                                {% if key == values.bedrooms %} selected {% endif %}>
+                                            {{ value }}
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -93,10 +85,8 @@
                                     <option selected="true" disabled="disabled">Max Price (All)</option>
                                     {% for key, value in price_choices.items %}
                                         <option value="{{ key }}"
-                                                {% if key == values.price %}
-                                                selected>
-                                                {% endif %}
-                                        {{ value }}
+                                                {% if key == values.price %} selected {% endif %}>
+                                            {{ value }}
                                         </option>
                                     {% endfor %}
                                 </select>

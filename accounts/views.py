@@ -1,28 +1,10 @@
 from django.contrib import auth, messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from accounts.forms.register_form import RegisterForm
-
-
-# def user_profile(request, pk=None):
-#     user = request.user if pk is None else User.objects.get(pk=pk)
-#     if request.method == 'GET':
-#         context = {
-#             'profile_user': user,
-#             'profile': user.userprofile,
-#             'listings': user.listing_set.all(),
-#             'form': UserProfileForm()
-#         }
-#         return render(request, 'accounts/user_profile.html', context)
-#     else:
-#         form = UserProfileForm(request.POST, request.FILES, instance=user.userprofile)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('current user profile')
-#         return redirect('current user profile')
+from listings.models import Listing
 
 
 def signup(request):
@@ -32,7 +14,6 @@ def signup(request):
         }
         return render(request, 'accounts/register.html', context)
     else:
-        # GET form values
         form = RegisterForm(request.POST)
 
         if form.is_valid():
@@ -55,13 +36,8 @@ def signout(request):
 
 
 def user_profile(request):
-    pass
-# Filter by the current logged in user
-
-# user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
-#
-# context = {
-#     'contacts': user_contacts
-# }
-#
-# return render(request, 'accounts/dashboard.html', context)
+    user_listings = Listing.objects.filter(created_by_id=request.user.id)
+    context = {
+        'user_listings': user_listings,
+    }
+    return render(request, 'accounts/user_profile.html', context)

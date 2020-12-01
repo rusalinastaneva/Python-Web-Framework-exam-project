@@ -50,8 +50,7 @@
                                     <select name="status" class="form-control">
                                         <option selected="true" disabled="disabled">Status (All)</option>
                                         {% for key, value in status_choices.items %}
-                                            <option value="{{ key }}">
-                                                {{ value }}
+                                            <option value="{{ key }}">{{ value }}
                                             </option>
                                         {% endfor %}
                                     </select>
@@ -60,9 +59,7 @@
                                     <select name="type_home" class="form-control">
                                         <option selected="true" disabled="disabled">Type of home (All)</option>
                                         {% for key, value in type_home_choices.items %}
-                                            <option value="{{ key }}">
-                                                {{ value }}
-                                            </option>
+                                            <option value="{{ key }}">{{ value }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

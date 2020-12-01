@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from listings.choices import price_choices, bedroom_choices, state_choices
+from listings.choices import price_choices, bedroom_choices, state_choices, status_choices, type_home_choices
 
 from listings.models import Listing
 
@@ -12,9 +12,13 @@ def index(request):
         'price_choices': price_choices,
         'bedroom_choices': bedroom_choices,
         'state_choices': state_choices,
-
+        'status_choices': status_choices,
+        'type_home_choices': type_home_choices,
     }
     return render(request, 'pages/index.html', context)
+
+
+
 
 # def about(request):
 #     # Get All Realtors
@@ -29,7 +33,6 @@ def index(request):
 #     }
 #
 #     return render(request, 'pages/about.html', context)
-
 
 
 
