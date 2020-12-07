@@ -6,7 +6,8 @@ from listings.models import Listing
 
 class ListingForm(forms.ModelForm, BootstrapFormMixin):
     def __init__(self, *args, **kwargs):
-        super(ListingForm, self).__init__(*args, **kwargs)
+        kwargs.setdefault('label_suffix', '')
+        super().__init__(*args, **kwargs)
         self.setup_form()
 
     class Meta:

@@ -36,7 +36,7 @@ def signout(request):
 
 
 def user_profile(request):
-    user_listings = Listing.objects.filter(created_by_id=request.user.id)
+    user_listings = Listing.objects.order_by('-list_date').filter(created_by_id=request.user.id)
     context = {
         'user_listings': user_listings,
     }

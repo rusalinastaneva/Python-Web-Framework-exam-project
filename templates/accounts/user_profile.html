@@ -45,6 +45,7 @@
                         <table class="table">
                             <thead>
                             <tr>
+                                <th scope="col">List date</th>
                                 <th scope="col">Property Address</th>
                                 <th scope="col">Type of home</th>
                                 <th scope="col">Price</th>
@@ -54,11 +55,13 @@
                             <tbody>
                             {% for listing in user_listings %}
                                 <tr>
+                                    <td>{{ listing.list_date }}</td>
                                     <td>{{ listing.title }}, {{ listing.city }}</td>
                                     <td>{{ listing.type_of_home }}</td>
-                                    <td>${{ listing.price | intcomma}}</td>
+                                    <td>${{ listing.price | intcomma }}</td>
                                     <td>
-                                        <a href="{% url 'details listing' listing.id %}" class="btn btn-light">View Listing</a>
+                                        <a href="{% url 'details listing' listing.id %}" class="btn btn-light">View
+                                            Listing</a>
                                         <a href="{% url 'edit listing' listing.id %}" class="btn btn-light">Edit</a>
                                         <a href="{% url 'delete listing' listing.id %}" class="btn btn-light">Delete</a>
                                     </td>

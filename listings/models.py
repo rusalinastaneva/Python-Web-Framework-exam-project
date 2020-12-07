@@ -3,6 +3,9 @@ from django.db import models
 from datetime import datetime
 
 from listings.choices import status_choices, type_home_choices, state_choices
+from listings.validators import validate_price_is_negative_or_zero, city_start_with_uppercase_letter, \
+    us_zipcode_consists_of_five_digits, validate_bedrooms_is_negative_or_zero, validate_bathrooms_is_negative_or_zero, \
+    validate_garage_is_negative, validate_sqft_is_negative_or_zero, validate_lot_size_is_negative_or_zero
 
 
 class Listing(models.Model):
@@ -13,18 +16,23 @@ class Listing(models.Model):
     objects = models.Manager()
     title = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, validators=(city_start_with_uppercase_letter,))
     state = models.CharField(max_length=100, choices=ALL_STATES)
-    zipcode = models.CharField(max_length=20)
+    zipcode = models.CharField(max_length=20, validators=(us_zipcode_consists_of_five_digits,))
     type_of_home = models.CharField(max_length=30, choices=HOME_TYPE)
     status = models.CharField(max_length=20, choices=HOME_STATUS)
     description = models.TextField(blank=True)
-    price = models.IntegerField()
-    bedrooms = models.IntegerField()
-    bathrooms = models.IntegerField()
-    garage = models.IntegerField()
-    sqft = models.IntegerField()
-    lot_size = models.DecimalField(max_digits=5, decimal_places=1)
+    price = models.IntegerField(validators=(validate_price_is_negative_or_zero,))
+    bedrooms = models.IntegerField(validators=(validate_bedrooms_is_negative_or_zero,))
+    bathrooms = models.IntegerField(validators=(validate_bathrooms_is_negative_or_zero,))
+    garage = models.IntegerField(validators=(validate_garage_is_negative,))
+    sqft = models.IntegerField(validators=(validate_sqft_is_negative_or_zero,))
+    lot_size = models.DecimalField(
+        "Lot size (Acres)",
+        max_digits=5,
+        decimal_places=1,
+        validators=(validate_lot_size_is_negative_or_zero,)
+    )
     is_published = models.BooleanField(default=True)
     list_date = models.DateTimeField(default=datetime.now, blank=True)
 

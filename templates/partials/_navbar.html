@@ -14,7 +14,7 @@
                     <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/">About</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li>
                     <a class="nav-link" href="{% url 'view listings' %}">Featured Listings</a>
@@ -44,10 +44,10 @@
                     </li>
                 {% else %}
                     <li>
-                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-user-plus"></i>Sign in</a>
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-user-plus"></i> Sign in</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="{% url 'signup user' %}"><i class="fas fa-sign-in-alt"></i>Join</a>
+                        <a class="nav-link" href="{% url 'signup user' %}"><i class="fas fa-sign-in-alt"></i> Join</a>
                     </li>
                 {% endif %}
             </ul>

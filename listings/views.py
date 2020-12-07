@@ -1,7 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import FormView, UpdateView
 
 from .choices import price_choices, bedroom_choices, state_choices, status_choices, type_home_choices
 from listings.forms.listing_form import ListingForm
@@ -89,52 +92,20 @@ def search(request):
     return render(request, 'listings/search.html', context)
 
 
-@login_required
-def create_listing(request):
-    if request.method == 'GET':
-        form = ListingForm()
+class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+    form_class = ListingForm
+    template_name = 'listings/listing_create.html'
+    success_url = reverse_lazy('user profile')
+    success_message = 'The listing is created!'
 
-        context = {
-            'form': form,
-        }
-        return render(request, 'listings/listing_create.html', context)
-    else:
-        form = ListingForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            listing = form.save(commit=False)
-            listing.created_by = request.user
-            listing.save()
-            return redirect('user profile')
-
-        context = {
-            'form': form,
-        }
-        return render(request, 'listings/listing_create.html', context)
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 
-def edit_listing(request, pk):
-    listing = Listing.objects.get(pk=pk)
-
-    if request.method == 'GET':
-        form = ListingForm(instance=listing)
-        context = {
-            'form': form,
-            'listing': listing
-        }
-        return render(request, 'listings/listing_edit.html', context)
-    else:
-        form = ListingForm(request.POST, request.FILES, instance=listing)
-
-        if form.is_valid():
-            form.save()
-            return redirect('user profile')
-
-        context = {
-            'listing': listing,
-            'form': form,
-        }
-        return render(request, 'listings/listing_edit.html', context)
+class ListingUpdateView(UpdateView):
+    pass
 
 
 def delete_listing(request, pk):
@@ -149,3 +120,50 @@ def delete_listing(request, pk):
         listing.delete()
         messages.success(request, 'The listing is now removed!')
         return redirect('user profile')
+
+# @login_required
+# def create_listing(request):
+#     if request.method == 'GET':
+#         form = ListingForm()
+#
+#         context = {
+#             'form': form,
+#         }
+#         return render(request, 'listings/listing_create.html', context)
+#     else:
+#         form = ListingForm(request.POST, request.FILES)
+#
+#         if form.is_valid():
+#             listing = form.save(commit=False)
+#             listing.created_by = request.user
+#             listing.save()
+#             return redirect('user profile')
+#
+#         context = {
+#             'form': form,
+#         }
+#         return render(request, 'listings/listing_create.html', context)
+
+
+# def edit_listing(request, pk):
+#     listing = Listing.objects.get(pk=pk)
+#
+#     if request.method == 'GET':
+#         form = ListingForm(instance=listing)
+#         context = {
+#             'form': form,
+#             'listing': listing
+#         }
+#         return render(request, 'listings/listing_edit.html', context)
+#     else:
+#         form = ListingForm(request.POST, request.FILES, instance=listing)
+#
+#         if form.is_valid():
+#             form.save()
+#             return redirect('user profile')
+#
+#         context = {
+#             'listing': listing,
+#             'form': form,
+#         }
+#         return render(request, 'listings/listing_edit.html', context)
