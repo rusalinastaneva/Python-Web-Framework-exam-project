@@ -4,7 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView, UpdateView
+from django.views.generic import FormView, UpdateView, DeleteView
 
 from listings.forms.listing_form import ListingForm
 from listings.models import Listing
@@ -135,18 +135,20 @@ class ListingUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         url = reverse_lazy('user profile')
         return url
 
-def delete_listing(request, pk):
-    listing = Listing.objects.get(pk=pk)
 
-    if request.method == "GET":
-        context = {
-            'listing': listing,
-        }
-        return render(request, 'listings/listing_delete.html', context)
-    else:
-        listing.delete()
-        messages.success(request, 'The listing is now removed!')
-        return redirect('user profile')
+class DeleteListingView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Listing
+    template_name = 'listings/listing_delete.html'
+    success_url = reverse_lazy('user profile')
+    success_message = 'The listing is successfully removed!'
+
+    def dispatch(self, request, *args, **kwargs):
+        listing = self.get_object()
+
+        if listing.created_by_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
 
 # @login_required
 # def create_listing(request):
