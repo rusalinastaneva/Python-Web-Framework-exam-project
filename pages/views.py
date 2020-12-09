@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from listings.choices import price_choices, bedroom_choices, state_choices, status_choices, type_home_choices
+from listings.forms.search_form import SearchListingForm
 
 from listings.models import Listing
 from team.models import TeamMembers
@@ -12,11 +12,7 @@ def index(request):
 
     context = {
         'listings': listings,
-        'price_choices': price_choices,
-        'bedroom_choices': bedroom_choices,
-        'state_choices': state_choices,
-        'status_choices': status_choices,
-        'type_home_choices': type_home_choices,
+        'filter_form': SearchListingForm()
     }
     return render(request, 'pages/index.html', context)
 

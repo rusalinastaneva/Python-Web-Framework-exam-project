@@ -29,14 +29,14 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'view listings' %}">Listings</a>
                     </li>
-                    <li class="breadcrumb-item active">{{ listing.title }}</li>
+                    <li class="breadcrumb-item active">{{ listing.city }}, {{ listing.title }}</li>
                 </ol>
             </nav>
         </div>
     </section>
 
     <!-- Alerts -->
-    {% include 'partials/_alerts.html' %}
+    {% include 'partials/alerts.html' %}
 
     <!-- Listing -->
     <section id="listing" class="py-4">

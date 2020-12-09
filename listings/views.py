@@ -3,12 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, UpdateView
 
-from .choices import price_choices, bedroom_choices, state_choices, status_choices, type_home_choices
 from listings.forms.listing_form import ListingForm
 from listings.models import Listing
+from .forms.search_form import SearchListingForm
 
 
 def view_listings(request):
@@ -31,6 +31,26 @@ def details_listing(request, pk):
         'listing': listing
     }
     return render(request, 'listings/details_listing.html', context)
+
+
+def extract_filter_values(params):
+    keywords = params['keywords'] if 'keywords' in params else ''
+    city = params['city'] if 'city' in params else ''
+    state = params['state'] if 'state' in params else ''
+    status = params['status'] if 'status' in params else ''
+    type_home = params['type_home'] if 'type_home' in params else ''
+    bedrooms = params['bedrooms'] if 'bedrooms' in params else ''
+    price = params['price'] if 'price' in params else ''
+
+    return {
+        'keywords': keywords,
+        'city': city,
+        'state': state,
+        'status': status,
+        'type_home': type_home,
+        'bedrooms': bedrooms,
+        'price': price,
+    }
 
 
 def search(request):
@@ -80,14 +100,15 @@ def search(request):
         if price:
             queryset_list = queryset_list.filter(price__lte=price)
 
+    params = extract_filter_values(request.GET)
+
+    # queryset_list = Listing.objects.filter(
+    #     Q(description__icontains=params['keywords']) | Q(city__iexact=params['city']) | Q(state__iexact=params['state'])
+    # ).order_by('-list_date')
+
     context = {
-        'price_choices': price_choices,
-        'bedroom_choices': bedroom_choices,
-        'state_choices': state_choices,
-        'status_choices': status_choices,
-        'type_home_choices': type_home_choices,
         'listings': queryset_list,
-        'values': request.GET
+        'filter_form': SearchListingForm(initial=params)
     }
     return render(request, 'listings/search.html', context)
 
@@ -96,7 +117,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     form_class = ListingForm
     template_name = 'listings/listing_create.html'
     success_url = reverse_lazy('user profile')
-    success_message = 'The listing is created!'
+    success_message = 'The listing is successfully created!'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -104,9 +125,15 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
-class ListingUpdateView(UpdateView):
-    pass
+class ListingUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Listing
+    form_class = ListingForm
+    template_name = 'listings/listing_edit.html'
+    success_message = 'The listing is successfully updated!'
 
+    def get_success_url(self):
+        url = reverse_lazy('user profile')
+        return url
 
 def delete_listing(request, pk):
     listing = Listing.objects.get(pk=pk)
