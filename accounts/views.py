@@ -1,8 +1,8 @@
-from django.contrib import auth, messages
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LogoutView, LoginView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -11,7 +11,7 @@ from listings.models import Listing
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
-    template_name = 'accounts/register.html'
+    template_name = 'accounts/signup.html'
     form_class = SignUpForm
     success_url = reverse_lazy('index')
     success_message = 'Great! You are already registered.'
@@ -23,12 +23,12 @@ class SignUpView(SuccessMessageMixin, CreateView):
         return valid
 
 
-@login_required
-def signout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        messages.success(request, 'You are now logged out!')
-        return redirect('index')
+class SignInView(LoginView):
+    template_name = 'accounts/signin.html'
+
+
+class SignOutView(LoginRequiredMixin, SuccessMessageMixin, LogoutView):
+    next_page = reverse_lazy('index')
 
 
 def user_profile(request):
@@ -43,7 +43,7 @@ def user_profile(request):
 #         context = {
 #             'form': RegisterForm(),
 #         }
-#         return render(request, 'accounts/register.html', context)
+#         return render(request, 'accounts/signup.html', context)
 #     else:
 #         form = RegisterForm(request.POST)
 #
@@ -55,4 +55,12 @@ def user_profile(request):
 #         context = {
 #             'form': form,
 #         }
-#         return render(request, 'accounts/register.html', context)
+#         return render(request, 'accounts/signup.html', context)
+
+
+# @login_required
+# def signout(request):
+#     if request.method == 'POST':
+#         auth.logout(request)
+#         messages.success(request, 'You are now logged out!')
+#         return redirect('index')

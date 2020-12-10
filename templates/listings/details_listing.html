@@ -161,7 +161,8 @@
                                 <h5 class="card-title">Property lessor</h5>
                             {% endif %}
                             <p>
-                                <i class="fa fa-user" aria-hidden="true"></i> {{ listing.created_by | upper }}
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                {{ listing.created_by.first_name | capfirst }} {{ listing.created_by.last_name | capfirst }}
                             </p>
                             <p>
                                 <i class="fas fa-phone"></i> +18502235690
