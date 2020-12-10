@@ -75,8 +75,11 @@
                                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
                                 <div class="card-img-overlay">
                                     <h2>
-                                        <span class="badge badge-secondary text-white">${{ listing.price | intcomma }}</span>
+                                        <span class="badge badge-secondary">${{ listing.price | intcomma }}</span>
                                     </h2>
+                                    <h6>
+                                        <span class="badge badge-secondary text-black">{{ listing.type_of_home | capfirst }} for {{ listing.status | capfirst }}</span>
+                                    </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="listing-heading text-center">

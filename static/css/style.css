@@ -1,3 +1,18 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 80px; /* bottom = footer height */
+}
+#bottom-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+}
+
 .btn-secondary {
     color: #fff !important;
 }

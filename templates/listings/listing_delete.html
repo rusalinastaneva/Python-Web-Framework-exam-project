@@ -11,10 +11,10 @@
                     <div class="row">
                         <div class="col-lg-3"></div>
                         <div class="col-lg-6">
-                            <form method="post">
+                            <form method="post" action="{% url 'delete listing' listing.id %}">
 
                                 {% for field in form %}
-                                    {% bootstrap_field field layout='inline' %}
+                                    {% bootstrap_field field%}
                                 {% endfor %}
                                 {% csrf_token %}
 
