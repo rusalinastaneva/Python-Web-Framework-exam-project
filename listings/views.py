@@ -54,6 +54,7 @@ class ListingUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         url = reverse_lazy('user profile')
         return url
 
+    # Permission's denied for listing updating by users which have not created the listing
     def dispatch(self, request, *args, **kwargs):
         listing = self.get_object()
 
@@ -68,6 +69,7 @@ class DeleteListingView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('user profile')
     success_message = 'The listing is successfully removed!'
 
+    # Permission's denied for listing deleting by users which have not created the listing
     def dispatch(self, request, *args, **kwargs):
         listing = self.get_object()
 
@@ -76,14 +78,15 @@ class DeleteListingView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
+# Extracting all the values by multiple filters
 def extract_filter_values(params):
     keywords = params['keywords'] if 'keywords' in params else ''
     city = params['city'] if 'city' in params else ''
     state = params['state'] if 'state' in params else ''
     status = params['status'] if 'status' in params else ''
     type_home = params['type_home'] if 'type_home' in params else ''
-    bedrooms = params['bedrooms'] if 'bedrooms' in params else ''
-    price = params['price'] if 'price' in params else ''
+    bedrooms = params['bedrooms'] if 'bedrooms' in params else None
+    price = params['price'] if 'price' in params else None
 
     return {
         'keywords': keywords,
@@ -96,64 +99,57 @@ def extract_filter_values(params):
     }
 
 
+# Get the search results
 def search(request):
     queryset_list = Listing.objects.order_by('-list_date')
 
-    # Keywords
-    if 'keywords' in request.GET:
-        keywords = request.GET['keywords']
+    params = extract_filter_values(request.GET)
+    keywords = params['keywords']
+    price = params['price']
+    city = params['city']
+    state = params['state']
+    status = params['status']
+    type_home = params['type_home']
+    bedrooms = params['bedrooms']
 
-        # check if it's not an empty string
-        if keywords:
-            queryset_list = queryset_list.filter(description__icontains=keywords)
+    # Keywords
+    # check if it's not an empty string
+    if keywords:
+        queryset_list = queryset_list.filter(description__icontains=keywords)
 
     # City
-    if 'city' in request.GET:
-        city = request.GET['city']
-        if city:
-            queryset_list = queryset_list.filter(city__iexact=city)
+    if city:
+        queryset_list = queryset_list.filter(city__iexact=city)
 
     # State
-    if 'state' in request.GET:
-        state = request.GET['state']
-        if state:
-            queryset_list = queryset_list.filter(state__iexact=state)
+    if state:
+        queryset_list = queryset_list.filter(state__iexact=state)
 
     # Status - sale/lease
-    if 'status' in request.GET:
-        status = request.GET['status']
-        if status:
-            queryset_list = queryset_list.filter(status__iexact=status)
+    if status:
+        queryset_list = queryset_list.filter(status__iexact=status)
 
     # Type of home
-    if 'type_home' in request.GET:
-        type_home = request.GET['type_home']
-        if type_home:
-            queryset_list = queryset_list.filter(type_of_home__iexact=type_home)
+    if type_home:
+        queryset_list = queryset_list.filter(type_of_home__iexact=type_home)
 
     # Bedrooms / lte - less than or equal to
-    if 'bedrooms' in request.GET:
-        bedrooms = request.GET['bedrooms']
-        if bedrooms:
-            queryset_list = queryset_list.filter(bedrooms__lte=bedrooms)
+    if bedrooms:
+        queryset_list = queryset_list.filter(bedrooms__lte=bedrooms)
 
     # Max Price
-    if 'price' in request.GET:
-        price = request.GET['price']
-        if price:
-            queryset_list = queryset_list.filter(price__lte=price)
-
-    params = extract_filter_values(request.GET)
-
-    # queryset_list = Listing.objects.filter(
-    #     Q(description__icontains=params['keywords']) | Q(city__iexact=params['city']) | Q(state__iexact=params['state'])
-    # ).order_by('-list_date')
+    if price:
+        queryset_list = queryset_list.filter(price__lte=price)
 
     context = {
         'listings': queryset_list,
         'filter_form': SearchListingForm(initial=params)
     }
     return render(request, 'listings/search.html', context)
+
+
+
+# Functional Views
 
 # @login_required
 # def create_listing(request):
