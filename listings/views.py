@@ -135,6 +135,13 @@ class ListingUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         url = reverse_lazy('user profile')
         return url
 
+    def dispatch(self, request, *args, **kwargs):
+        listing = self.get_object()
+
+        if listing.created_by_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
 
 class DeleteListingView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Listing
@@ -148,7 +155,6 @@ class DeleteListingView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         if listing.created_by_id != request.user.id:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
-
 
 # @login_required
 # def create_listing(request):
