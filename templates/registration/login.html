@@ -16,7 +16,7 @@
                             <div>Sign In with your current username</div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{% url 'login' %}">
+                            <form method="POST" action="{% url 'signin user' %}">
                                 <input type="hidden" name="return_url" value="{{ request.GET.next }}"/>
                                 {% csrf_token %}
                                 {% for field in form %}

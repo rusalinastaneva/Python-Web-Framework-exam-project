@@ -9,9 +9,9 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-12">
-                    <h1 class="display-4">{{ listing.title }}</h1>
+                    <h3 class="display-4">{{ listing.type_of_home | capfirst}} for {{ listing.status | capfirst}}</h3>
                     <p class="lead">
-                        <i class="fas fa-map-marker"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}
+                        <i class="fas fa-map-marker"></i> {{ listing.address }}, {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}
                     </p>
                 </div>
             </div>
@@ -46,11 +46,7 @@
                 <div class="col-md-9">
                     <!-- Home Main Image -->
                     <img src="{{ listing.photo_main.url }}" alt="" class="img-main img-fluid mb-3">
-                    <div class="card-img-overlay">
-                        <h2>
-                            <span class="badge badge-secondary text-white">{{ listing.status | upper }}</span>
-                        </h2>
-                    </div>
+
                     <!-- Pictures -->
                     <div class="row mb-5 thumbs">
                         {% if listing.photo_1 %}
@@ -143,7 +139,6 @@
                             </ul>
                         </div>
                     </div>
-
                     <!-- Description -->
                     <div class="row mb-5">
                         <div class="col-md-12">

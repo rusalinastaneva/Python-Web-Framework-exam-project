@@ -24,7 +24,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
 
 
 class SignInView(LoginView):
-    template_name = 'accounts/signin.html'
+    pass
 
 
 class SignOutView(LoginRequiredMixin, SuccessMessageMixin, LogoutView):
