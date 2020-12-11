@@ -22,8 +22,7 @@
 The project is a **Django**-powered **web listing platform** designed specifically for the **real estate** crowd and **focused on** being a marketplace **for buyers and sellers** of real estate. 
 It's a platform that **allows property owners to post** real estate listings for sale or lease **for FREE**.
 
-![homepage][index]
-[index]:  static/img/home.png
+![home](static/img/home.png)
 
 #### 2. <a name="project-functionality"></a>PROJECT FUNCTIONALITY
 
