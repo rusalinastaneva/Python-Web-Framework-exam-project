@@ -1,5 +1,7 @@
 {% extends 'shared/base.html' %}
 
+{% load timesince_filter %}
+
 {% load humanize %}
 
 {% block title %} | Welcome{% endblock %}
@@ -113,7 +115,7 @@
                                     </div>
                                     <div class="row text-secondary pb-2">
                                         <div class="col-6">
-                                            <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}
+                                            <i class="fas fa-clock"></i> {{ listing.list_date | timesince | upto:',' }}
                                         </div>
                                     </div>
                                     <hr>
@@ -122,7 +124,6 @@
                                 </div>
                             </div>
                         </div>
-
                     {% endfor %}
                 {% else %}
                     <div class="col-md-12">
