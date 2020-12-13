@@ -86,8 +86,8 @@ def extract_filter_values(params):
     state = params['state'] if 'state' in params else ''
     status = params['status'] if 'status' in params else ''
     type_home = params['type_home'] if 'type_home' in params else ''
-    bedrooms = params['bedrooms'] if 'bedrooms' in params else None
-    price = params['price'] if 'price' in params else None
+    bedrooms = params['bedrooms'] if 'bedrooms' in params else ''
+    price = params['price'] if 'price' in params else ''
 
     return {
         'keywords': keywords,
