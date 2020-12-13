@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
 
-from listings.choices import STATE_CHOICES, STATUS_CHOICES, TYPE_HOME_CHOICES, BEDROOM_CHOICES
-from listings.validators import validate_price_is_negative_or_zero, city_start_with_uppercase_letter, \
-    us_zipcode_consists_of_five_digits, validate_bedrooms_is_negative_or_zero, validate_bathrooms_is_negative_or_zero, \
+from homeplace.listings.choices import STATE_CHOICES, STATUS_CHOICES, TYPE_HOME_CHOICES, BEDROOM_CHOICES
+from homeplace.listings.validators import validate_price_is_negative_or_zero, city_start_with_uppercase_letter, \
+    us_zipcode_consists_of_five_digits, validate_bathrooms_is_negative_or_zero, \
     validate_garage_is_negative, validate_sqft_is_negative_or_zero, validate_lot_size_is_negative_or_zero
 
 
@@ -19,7 +19,7 @@ class Listing(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     description = models.TextField(blank=True)
     price = models.IntegerField(validators=(validate_price_is_negative_or_zero,))
-    bedrooms = models.IntegerField(choices=BEDROOM_CHOICES, validators=(validate_bedrooms_is_negative_or_zero,))
+    bedrooms = models.IntegerField(choices=BEDROOM_CHOICES)
     bathrooms = models.IntegerField(validators=(validate_bathrooms_is_negative_or_zero,))
     garage = models.IntegerField(validators=(validate_garage_is_negative,))
     sqft = models.IntegerField(validators=(validate_sqft_is_negative_or_zero,))

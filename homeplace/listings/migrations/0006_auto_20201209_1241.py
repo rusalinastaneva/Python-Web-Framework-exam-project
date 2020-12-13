@@ -2,7 +2,8 @@
 
 import datetime
 from django.db import migrations, models
-import listings.validators
+
+from homeplace.listings import validators
 
 
 class Migration(migrations.Migration):
@@ -15,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='listing',
             name='bedrooms',
-            field=models.IntegerField(choices=[('', 'Bedrooms (All)'), ('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5), ('6', 6), ('7', 7), ('8', 8), ('9', 9), ('10', 10)], validators=[listings.validators.validate_bedrooms_is_negative_or_zero]),
+            field=models.IntegerField(choices=[('', 'Bedrooms (All)'), ('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5), ('6', 6), ('7', 7), ('8', 8), ('9', 9), ('10', 10)]),
         ),
         migrations.AlterField(
             model_name='listing',

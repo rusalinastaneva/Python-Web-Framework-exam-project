@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from team.models import TeamMembers
+from homeplace.team.models import TeamMembers
 
 
 class TeamAdmin(admin.ModelAdmin):

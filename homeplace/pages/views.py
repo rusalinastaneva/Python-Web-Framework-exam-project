@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from listings.forms.search_form import SearchListingForm
-
-from listings.models import Listing
-from team.models import TeamMembers
+from homeplace.listings.forms.search_form import SearchListingForm
+from homeplace.listings.models import Listing
+from homeplace.team.models import TeamMembers
 
 
 def index(request):

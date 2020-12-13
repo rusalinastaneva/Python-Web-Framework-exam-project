@@ -1,6 +1,6 @@
 from django import forms
 
-from listings.choices import STATE_CHOICES, STATUS_CHOICES, TYPE_HOME_CHOICES, BEDROOM_CHOICES, PRICE_CHOICES
+from homeplace.listings.choices import STATE_CHOICES, STATUS_CHOICES, TYPE_HOME_CHOICES, BEDROOM_CHOICES, PRICE_CHOICES
 
 
 class SearchListingForm(forms.Form):

@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from accounts.forms.signup_form import SignUpForm
-from listings.models import Listing
+from homeplace.accounts.forms.signup_form import SignUpForm
+from homeplace.listings.models import Listing
 
 
 class SignUpView(SuccessMessageMixin, CreateView):

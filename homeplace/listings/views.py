@@ -5,9 +5,10 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import FormView, UpdateView, DeleteView
 
-from listings.forms.listing_form import ListingForm
-from listings.models import Listing
+
+from .forms.listing_form import ListingForm
 from .forms.search_form import SearchListingForm
+from .models import Listing
 
 
 def view_listings(request):

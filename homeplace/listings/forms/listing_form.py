@@ -1,7 +1,7 @@
 from django import forms
 
-from core.BootstrapFormMixin import BootstrapFormMixin
-from listings.models import Listing
+from homeplace.core.BootstrapFormMixin import BootstrapFormMixin
+from homeplace.listings.models import Listing
 
 
 class ListingForm(forms.ModelForm, BootstrapFormMixin):

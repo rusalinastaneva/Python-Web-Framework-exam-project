@@ -16,14 +16,9 @@ def validate_price_is_negative_or_zero(value):
         raise ValidationError('Insert a valid value. Price cannot be negative or zero!')
 
 
-def validate_bedrooms_is_negative_or_zero(value):
-    if value <= 0:
-        raise ValidationError('Select a valid choice. Bedrooms cannot be negative or zero!')
-
-
 def validate_bathrooms_is_negative_or_zero(value):
     if value <= 0:
-        raise ValidationError('Insert a valid value. Bedrooms cannot be negative or zero!')
+        raise ValidationError('Insert a valid value. Bathrooms cannot be negative or zero!')
 
 
 def validate_garage_is_negative(value):

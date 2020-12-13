@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from accounts.views import user_profile, SignUpView, SignOutView, SignInView
+from homeplace.accounts.views import user_profile, SignUpView, SignOutView, SignInView
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),

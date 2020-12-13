@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from core.BootstrapFormMixin import BootstrapFormMixin
+from homeplace.core.BootstrapFormMixin import BootstrapFormMixin
 
 
 class SignUpForm(UserCreationForm, BootstrapFormMixin):

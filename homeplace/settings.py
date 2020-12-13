@@ -29,10 +29,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'listings',
-    'team',
-    'accounts',
-    'pages',
+    'homeplace.listings',
+    'homeplace.team',
+    'homeplace.accounts',
+    'homeplace.pages',
     'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
